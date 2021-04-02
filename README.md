@@ -74,13 +74,13 @@ username and password.  Using API Keys are a best practice, see the [ApiKey docs
 ```
 POST /_security/api_key
 {
-  "name": "nodejs_example",
+  "name": "python_example",
   "role_descriptors": {
-    "nodejs_example_writer": {
+    "python_example_writer": {
       "cluster": ["monitor"],
       "index": [
         {
-          "names": ["game-of-thrones"],
+          "names": ["test-index"],
           "privileges": ["create_index", "write", "read", "manage"]
         }
       ]
@@ -93,50 +93,27 @@ Output is:
 ```
 {
   "id" : "nx9OEngBZE2R_LhmKJgG",
-  "name" : "nodejs_example",
+  "name" : "python_example",
   "api_key" : "zMWKady5T4OxaJWAuXCgBg"
 }
 ```
 
-To use the above key in your Node.js code, concatenate the `id` and `api_key`
-values (with a `:` separator) and pipe the string to `base64` like so:
+Edit the configuration file (`example.ini`) created earlier and add the above ID and API Key.  You should remove the username and password once you have tested the API key, and change the `elastic` password using the Cloud Console.
+`example.ini`:
 ```
-echo -n 'nx9OEngBZE2R_LhmKJgG:zMWKady5T4OxaJWAuXCgBg' | base64
-```
-
-Output is:
-```
-bng5T0VuZ0JaRTJSX0xobUtKZ0c6ek1XS2FkeTVUNE94YUpXQXVYQ2dCZw==
-```
-
-Edit the configuration file created earlier and add the above API Key.  You can have more than one set of configurations, below is one for Cloud and one for self managed:
-`config/default.json`:
-```
-{
-  "elastic-cloud": {
-    "cloudID": "deploymentname:deploymentconnectiondetails",
-    "username": "elastic",
-    "password": "longpassword",
-    "apiKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=="
-  },
-  "elastic-self-managed": {
-    "node": "https://192.168.33.26:9200",
-    "username": "elastic",
-    "password": "changeme",
-    "apiKey": "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZzzzzzzzzz=="
-  }
-}
+[DEFAULT]
+cloud_id = i-o-optimized-deployment:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+user = elastic
+password = xxxxxxxxxxxxxxxxxxxxxxxx
+apikey_id = nx9OEngBZE2R_LhmKJgG
+apikey_key = zMWKady5T4OxaJWAuXCgBg
 ```
 
-Now the API Key can be used in place of the username and password.  The client connection becomes:
+Now the API Key can be used in place of the `http_auth` username and password.  The connection becomes:
 
 ```
-const client = new Client({
-  cloud: {
-    id: elasticConfig.cloudID
-  },
-  auth: {
-    apiKey: elasticConfig.apiKey
-  }
-})
+es = Elasticsearch(
+    cloud_id=config['DEFAULT']['cloud_id'],
+    api_key=(config['DEFAULT']['apikey_id'], config['DEFAULT']['apikey_key']),
+)
 ```
