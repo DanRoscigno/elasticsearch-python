@@ -103,8 +103,6 @@ Edit the configuration file (`example.ini`) created earlier and add the above ID
 ```
 [DEFAULT]
 cloud_id = i-o-optimized-deployment:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-user = elastic
-password = xxxxxxxxxxxxxxxxxxxxxxxx
 apikey_id = nx9OEngBZE2R_LhmKJgG
 apikey_key = zMWKady5T4OxaJWAuXCgBg
 ```
