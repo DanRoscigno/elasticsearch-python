@@ -7,7 +7,8 @@ config.read('example.ini')
 
 es = Elasticsearch(
     cloud_id=config['DEFAULT']['cloud_id'],
-    http_auth=(config['DEFAULT']['user'], config['DEFAULT']['password']),
+    api_key=(config['DEFAULT']['apikey_id'], config['DEFAULT']['apikey_key']),
+    #http_auth=(config['DEFAULT']['user'], config['DEFAULT']['password']),
 )
 
 doc = {
