@@ -117,3 +117,5 @@ es = Elasticsearch(
     api_key=(config['DEFAULT']['apikey_id'], config['DEFAULT']['apikey_key']),
 )
 ```
+
+For more information on refreshing an index, searching, updating, and deleting see [the elasticsearch-py docs](https://www.elastic.co/guide/en/elasticsearch/client/python-api/current/examples.html).
